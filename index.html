@@ -117,6 +117,12 @@ h1,h2,.quote__text{text-wrap:balance}
 @media (max-width:1100px){.navbtn{top:36px}.navpanel{top:96px}}
 @media (max-width:600px){.navbtn{top:14px;width:44px;height:44px;padding:0 12px}.navpanel{top:68px}}
 
+/* Reduce Motion: no scroll scenes, but the dated steps and the country cards still arrive one at a time,
+   with a plain fade and no movement */
+@media (prefers-reduced-motion:reduce){
+  .rm-fade{opacity:0;transition:opacity .7s ease}
+  .rm-fade.is-in{opacity:1}
+}
 /* Hero: the hook, one line of why, one button. The story starts on the next screen. */
 /* The first screen is the hook alone: the masthead and the hero fill it, the clip comes after */
 .hero{display:flex;flex-direction:column;justify-content:center;min-height:calc(100svh - 165px);padding:40px 0 0;background:var(--color-surface)}
@@ -873,8 +879,28 @@ html:not(.js) .globe__fig{display:none}
     var ext = hv.canPlayType('video/mp4; codecs="avc1.640028"') ? ".mp4" : ".webm";
     hv.src = (window.matchMedia("(max-width: 599px)").matches ? hv.dataset.square : hv.dataset.wide) + ext;
     hv.addEventListener("playing", function () { hv.classList.add("is-playing"); });
-    var playHero = function () { var pr = hv.play(); if (pr && pr.catch) pr.catch(function () {}); };
-    if ("IntersectionObserver" in window) new IntersectionObserver(function (e) { if (e[0].isIntersecting) playHero(); else hv.pause(); }).observe(hv);
+    /* Some phones refuse to play video at all (an iPhone in Low Power Mode). Then the still is swapped for
+       an animated image of the same loop, which those phones do play. Phones that play the video never
+       load it. */
+    var swapped = false, phoneCut = window.matchMedia("(max-width: 599px)").matches;
+    var useAnim = function () {
+      if (swapped || hv.classList.contains("is-playing") || document.hidden) return;
+      swapped = true;
+      var still = document.querySelector(".hero__media img"), src = document.querySelector(".hero__media source");
+      var anim = phoneCut ? "assets/hero/hero-square-anim.webp" : "assets/hero/hero-wide-anim.webp";
+      if (src) src.srcset = anim;
+      if (still) { still.removeAttribute("srcset"); still.src = anim; }
+      hv.remove();
+    };
+    var blockedCheck = 0;
+    var playHero = function () {
+      var pr = hv.play();
+      if (pr && pr.catch) pr.catch(function (err) { if (err && err.name === "NotAllowedError") useAnim(); });
+      /* a refusal can also be silent: the clip is loaded but stays paused */
+      clearTimeout(blockedCheck);
+      blockedCheck = setTimeout(function () { if (hv.isConnected && hv.paused && hv.readyState >= 2) useAnim(); }, 3000);
+    };
+    if ("IntersectionObserver" in window) new IntersectionObserver(function (e) { if (!hv.isConnected) return; if (e[0].isIntersecting) playHero(); else { clearTimeout(blockedCheck); hv.pause(); } }).observe(hv);
     else playHero();
     document.addEventListener("visibilitychange", function () { if (document.hidden) hv.pause(); });
   }
@@ -1065,6 +1091,20 @@ html:not(.js) .globe__fig{display:none}
   });
   document.addEventListener("keydown", function (e) { if (e.key === "Escape" && panel.classList.contains("is-open")) { set(false); btn.focus(); } });
   document.addEventListener("click", function (e) { if (panel.classList.contains("is-open") && !panel.contains(e.target) && !btn.contains(e.target)) set(false); });
+})();
+</script>
+<script>
+/* Reduce Motion: fade the dated steps and the country cards in as they reach the screen (no movement) */
+(function () {
+  if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches || !("IntersectionObserver" in window)) return;
+  var els = Array.prototype.slice.call(document.querySelectorAll("#sequence .chain > li, #sequence .chain__close, #timing .ladder .route, #timing .ladder__after"));
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add("is-in"); io.unobserve(e.target); } });
+  }, { rootMargin: "0px 0px -15% 0px" });
+  els.forEach(function (el) {
+    if (el.getBoundingClientRect().top < window.innerHeight * 0.85) return;   /* already on screen: leave it */
+    el.classList.add("rm-fade"); io.observe(el);
+  });
 })();
 </script>
 </body>
