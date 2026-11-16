@@ -57,7 +57,9 @@
       box.classList.add('has-frame');
     };
     if ('ResizeObserver' in window) new ResizeObserver(size).observe(box); else size();
-    return { n, start, show(i) { current = clamp(i, 0, n - 1); queue(); } };
+    // one frame only (the finished composition needs just the last one)
+    const only = (i, isPhone) => { if (started) return; phone = !!isPhone; load(i); };
+    return { n, start, only, show(i) { current = clamp(i, 0, n - 1); queue(); } };
   };
 
   Scenes['chain-timeline'] = (root, opts = {}) => {
@@ -168,18 +170,22 @@
       if (chipBox) { chipBox.removeAttribute('style'); root.classList.remove('is-intro'); root.style.removeProperty('--say-top'); }
       [say1, say2].forEach((el) => el && el.classList.remove('is-on'));
       if (close) close.classList.remove('is-active');
-      if (chip) { chip.start(isPhone()); chip.show(chip.n - 1); }
+      if (chip) { chip.only(chip.n - 1, isPhone()); chip.show(chip.n - 1); }   // the scan still: one frame, not the clip
       root.style.removeProperty('--close-top'); root.style.removeProperty('--close-left');
       delete root.dataset.cap; lastActive = null;
     };
 
-    // Start loading the frames a screen and a half before the scene arrives.
-    if (chip && 'IntersectionObserver' in window) {
-      const io = new IntersectionObserver((e) => { if (e[0].isIntersecting) { chip.start(isPhone()); io.disconnect(); } }, { rootMargin: '300% 0px' });
+    // The clip's frames are fetched only when the scene is running and within two screens of the visitor,
+    // and never before the page itself has loaded, so the first screen's picture is not kept waiting.
+    const watch = () => {
+      if (!chip || !('IntersectionObserver' in window)) { if (chip && root.classList.contains('is-live')) chip.start(isPhone()); return; }
+      const io = new IntersectionObserver((e) => {
+        if (!e[0].isIntersecting || !root.classList.contains('is-live')) return;
+        chip.start(isPhone()); io.disconnect();
+      }, { rootMargin: '200% 0px' });
       io.observe(root);
-    } else if (chip) chip.start(isPhone());
-    // once the page itself has loaded, fetch the frames anyway, so they are in before the visitor gets here
-    if (chip) window.addEventListener('load', () => setTimeout(() => chip.start(isPhone()), 1200));
+    };
+    if (document.readyState === 'complete') watch(); else window.addEventListener('load', watch);
 
     return Stage.scene(root, {
       hold: opts.hold ?? HOLD,
