@@ -200,24 +200,6 @@ h1,h2,.quote__text{text-wrap:balance}
 /* Sections */
 .section{padding:var(--section) 0}
 .section--mist{background:var(--color-surface-alt)}
-/* Cargo scene: the crate clip scrubbed by the scroll, one line under it at a time. Without the scene running
-   (reduced motion, no script) it is the closed crate with both lines under it. */
-.crate{background:var(--color-surface)}
-.crate__wrap{display:flex;flex-direction:column;align-items:center;text-align:center}
-.crate__media{position:relative;width:min(100%,760px);aspect-ratio:4 / 3;background:var(--white)}
-.crate__media{-webkit-mask-image:linear-gradient(to right,transparent,#000 9%,#000 91%,transparent),linear-gradient(to bottom,transparent,#000 7%,#000 93%,transparent);-webkit-mask-composite:source-in; /* taste-skill-ignore: an alpha mask feathering the clip's edge so the arm fades in, nothing is filled */
-  mask-image:linear-gradient(to right,transparent,#000 9%,#000 91%,transparent),linear-gradient(to bottom,transparent,#000 7%,#000 93%,transparent);mask-composite:intersect} /* taste-skill-ignore: as above */
-.crate__media img,.crate__media canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
-.crate__media canvas{opacity:0}
-.crate__media.has-frame canvas{opacity:1}
-.crate__say{margin-top:28px}
-.crate__say p{font:800 44px/1.15 var(--font-display);letter-spacing:-.02em;color:var(--color-heading);text-wrap:balance}
-.crate.is-live{padding:0}
-.crate.is-live .crate__wrap{height:100%;justify-content:center}
-.crate.is-live .crate__media{width:min(calc((100svh - 260px) * 4 / 3),100%)}
-.crate.is-live .crate__say{position:relative;width:100%;height:2.4em;font-size:44px}
-.crate.is-live .crate__say p{position:absolute;left:0;right:0;top:0;opacity:0;transform:translateY(12px);transition:opacity .45s ease,transform .45s ease}
-.crate.is-live .crate__say p.is-on{opacity:1;transform:none;transition-delay:.3s}
 /* Founders' note: the heading and the signature hold the left of the grid, the note fills the right.
    The two quote marks are real curly quotes in the display face, enlarged and set in the accent: the
    opening one hangs in the margin before the first word, the closing one ends the last line. */
@@ -384,6 +366,7 @@ html:not(.js) .globe__fig{display:none}
 .split__copy p{max-width:56ch;font-size:20px;line-height:1.6}
 .split__copy .btn{margin-top:30px}
 .factcard{margin:26px 0 0;padding:22px 26px;background:var(--color-surface);border-left:6px solid var(--color-heading);border-radius:var(--radius-paper)}
+.section:not(.section--mist) .factcard{background:var(--color-surface-alt)}
 .factcard p{font-size:17px;line-height:1.55}
 .factcard p + p{margin-top:10px}
 
@@ -493,8 +476,6 @@ html:not(.js) .globe__fig{display:none}
   .split{gap:24px}
   .split__copy p{font-size:17px}
   .founders__quote p{font-size:18px}
-  .crate__say p,.crate.is-live .crate__say{font-size:26px}
-  .crate.is-live .crate__media{width:min(calc((100svh - 300px) * 4 / 3),100%)}
 
   .split__copy .btn,.closing__actions .btn{width:100%}
   .handover{margin-top:24px}
@@ -783,22 +764,7 @@ html:not(.js) .globe__fig{display:none}
   </div>
 </section>
 
-<section class="section scene crate" id="cargo" data-scene="crate-close" data-options='{"hold":1}' aria-label="Your pet may fly as cargo. We never treat it like cargo.">
-  <div class="scene-stage">
-    <div class="wrap crate__wrap">
-      <div class="crate__media" data-count="72" data-desktop="../assets/crate/d-{n}.webp" data-phone="../assets/crate/p-{n}.webp">
-        <img src="../assets/crate/end.jpg" width="1040" height="780" loading="lazy" decoding="async" alt="A pet travel crate with a blanket, a water bowl and a small teddy inside, its door closed">
-        <canvas aria-hidden="true"></canvas>
-      </div>
-      <div class="crate__say">
-        <p class="crate__say1">Your pet may fly as cargo.</p>
-        <p class="crate__say2">We&nbsp;never treat it like cargo.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="section section--mist" id="founders" aria-labelledby="founders-title">
+<section class="section" id="founders" aria-labelledby="founders-title">
   <div class="wrap">
     <div class="founders">
       <div class="founders__side">
@@ -814,7 +780,7 @@ html:not(.js) .globe__fig{display:none}
   </div>
 </section>
 
-<section class="section" id="species">
+<section class="section section--mist" id="species">
   <div class="wrap split split--media">
     <div class="split__copy">
       <h2>Rabbits, birds, reptiles and other species</h2>
@@ -825,7 +791,7 @@ html:not(.js) .globe__fig{display:none}
   </div>
 </section>
 
-<section class="section section--mist" id="into-malaysia">
+<section class="section" id="into-malaysia">
   <div class="wrap split">
     <div>
       <h2>Bringing a pet into Malaysia?</h2>
@@ -842,7 +808,7 @@ html:not(.js) .globe__fig{display:none}
   </div>
 </section>
 
-<section class="section" id="questions">
+<section class="section section--mist" id="questions">
   <div class="wrap">
     <div class="section__head"><h2>Questions people ask</h2></div>
     <div class="faq">
@@ -977,7 +943,6 @@ html:not(.js) .globe__fig{display:none}
 <script src="../assets/scenes/chain-timeline.js"></script>
 <script src="../assets/scenes/land-dots.js"></script>
 <script src="../assets/scenes/route-globe.js"></script>
-<script src="../assets/scenes/crate-close.js"></script>
 <script>
 /* The first screen as you scroll. Wide screens: the masthead and the hero hold still for most of a screen
    while the camera pushes in on the dog and the cat and the words fade; then the page moves on to the
