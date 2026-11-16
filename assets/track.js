@@ -8,7 +8,7 @@ var FUGR_GA4_ID = "";
 
 // Events sent (GA4 > Reports > Engagement > Events):
 //   whatsapp_click   a WhatsApp button or link was pressed. Mark this one as a key event in GA4.
-//                    cta_location: hero, check, menu, sticky_bar, footer, or the section's id
+//                    cta_location: hero, form, menu, sticky_bar, footer, or the section's id
 //                    cta_intent:   leaving_malaysia, entering_malaysia, or general
 //                    cta_text:     the words on the button
 //   email_click      the email address was pressed (same cta_location)
@@ -32,6 +32,7 @@ var FUGR_GA4_ID = "";
 
   // Where on the page a link sits
   var where = function (el) {
+    if (el.closest(".ask")) return "form";
     if (el.closest(".navpanel")) return "menu";
     if (el.closest("#sticky-cta")) return "sticky_bar";
     if (el.closest(".hero")) return "hero";
@@ -47,7 +48,7 @@ var FUGR_GA4_ID = "";
 
   document.addEventListener("click", function (e) {
     var a = e.target.closest ? e.target.closest("a[href]") : null;
-    if (!a) return;
+    if (!a || e.defaultPrevented) return;   // the form stops a press when the country is still empty
     var href = a.getAttribute("href") || "";
     if (href.indexOf("wa.me/") !== -1) {
       var intent = /bring%20a%20pet%20into%20Malaysia/i.test(href) ? "entering_malaysia" : /eligibility%20assessment/i.test(href) ? "leaving_malaysia" : "general";
@@ -55,7 +56,7 @@ var FUGR_GA4_ID = "";
     } else if (href.indexOf("mailto:") === 0) {
       send("email_click", { cta_location: where(a) });
     }
-  }, true);
+  });
 
   // How far down the page people get: each section, the first time a good part of it is on screen
   if ("IntersectionObserver" in window) {
