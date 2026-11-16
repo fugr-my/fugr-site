@@ -8,7 +8,8 @@ var FUGR_GA4_ID = "";
 
 // Events sent (GA4 > Reports > Engagement > Events):
 //   whatsapp_click   a WhatsApp button or link was pressed. Mark this one as a key event in GA4.
-//                    cta_location: hero, form, menu, sticky_bar, footer, or the section's id
+//                    cta_location: hero, form, menu, top_button (wide screens), sticky_bar (phones),
+//                                  footer, or the section's id
 //                    cta_intent:   leaving_malaysia, entering_malaysia, or general
 //                    cta_text:     the words on the button
 //   email_click      the email address was pressed (same cta_location)
@@ -34,6 +35,7 @@ var FUGR_GA4_ID = "";
   var where = function (el) {
     if (el.closest(".ask")) return "form";
     if (el.closest(".navpanel")) return "menu";
+    if (el.closest("#top-cta")) return "top_button";
     if (el.closest("#sticky-cta")) return "sticky_bar";
     if (el.closest(".hero")) return "hero";
     if (el.closest("footer")) return "footer";

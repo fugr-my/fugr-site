@@ -164,19 +164,15 @@ h1,h2,.quote__text{text-wrap:balance}
 .cta__note{font-size:15px;line-height:1.5;color:var(--color-text-muted);max-width:44ch}
 .section--mist .cta__note{color:var(--color-text)}
 
-/* The free check, straight after the first screen: a short form that writes the WhatsApp or email message
-   for the visitor. Nothing is sent or stored by the page; the two buttons are ordinary links whose address
-   is rewritten as the fields change. Without script the buttons still open the message with blank fields. */
-.check{padding:80px 0 88px;background:var(--color-surface-alt)}
-.check__grid{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:64px;align-items:start}
-.check h2{font-size:36px;line-height:1.1;max-width:14ch;margin-bottom:16px}
-.check__lead{margin-bottom:28px;font-size:20px;line-height:1.5}
-.check__next{max-width:44ch}
-.ask{padding:32px;background:var(--color-surface);border-radius:var(--radius-paper)}
+/* The free check form (in the assessment section): it writes the WhatsApp or email message for the
+   visitor. Nothing is sent or stored by the page; the two buttons are ordinary links whose address is
+   rewritten as the fields change. Without script the buttons still open the message with blank fields. */
+.ask{padding:32px;background:var(--color-surface-alt);border-radius:var(--radius-paper)}
+.ask__title{margin-bottom:20px}
 .ask__dir{display:flex;gap:8px;margin:0 0 24px;padding:0;border:0}
 .ask__dir label{flex:1;cursor:pointer}
 .ask__dir input{position:absolute;opacity:0;pointer-events:none}
-.ask__dir span{display:flex;align-items:center;justify-content:center;min-height:48px;padding:8px 12px;border:2px solid var(--color-heading);border-radius:var(--radius-control);font:700 16px/1.25 var(--font-text);color:var(--color-heading);text-align:center}
+.ask__dir span{display:flex;align-items:center;justify-content:center;min-height:48px;padding:8px 12px;border:2px solid var(--color-heading);border-radius:var(--radius-control);background:var(--color-surface);font:700 16px/1.25 var(--font-text);color:var(--color-heading);text-align:center}
 .ask__dir input:checked + span{background:var(--color-heading);color:var(--color-on-inverse)}
 .ask__dir input:focus-visible + span{outline:3px solid var(--color-focus);outline-offset:3px}
 .ask__row{display:grid;gap:16px;margin-bottom:18px}
@@ -186,21 +182,15 @@ h1,h2,.quote__text{text-wrap:balance}
 .ask__field input,.ask__field select{display:block;width:100%;min-height:48px;padding:10px 12px;border:1.5px solid var(--color-text-muted);border-radius:var(--radius-control);background:var(--color-surface);color:var(--color-text);font:400 17px/1.3 var(--font-text)}
 .ask__field input::placeholder{color:var(--color-text-muted);opacity:1}
 .ask__field input[aria-invalid="true"]{border-color:var(--color-heading);border-width:2.5px}
-.ask__hint,.ask__err{margin-top:6px;font-size:14px;line-height:1.4;color:var(--color-text-muted)}
+.ask__hint,.ask__err{margin-top:6px;font-size:14px;line-height:1.4;color:var(--color-text)}
 .ask__err{font-weight:700;color:var(--color-heading)}
 .ask__send{display:flex;flex-wrap:wrap;align-items:center;gap:10px 28px;margin-top:26px}
 .ask__note{margin-top:16px;font-size:15px;line-height:1.5;color:var(--color-text)}
+.ask__note + .ask__note{margin-top:8px}
 html:not(.js) .ask__dir,html:not(.js) .ask__row{display:none}
-@media (max-width:1120px){
-  .check__grid{grid-template-columns:1fr;gap:36px}
-  .check h2{max-width:none}
-}
 @media (max-width:767px){
-  .check{padding:56px 0 64px}
-  .check h2{font-size:28px}
-  .check__lead{font-size:18px;margin-bottom:22px}
   .ask{padding:22px 18px 24px}
-  .ask__row--2,.ask__row--3{grid-template-columns:1fr}
+  .ask__row--2{grid-template-columns:1fr}
   .ask__row--3{grid-template-columns:1fr 1fr}
   .ask__row--3 .ask__field:nth-child(2){grid-column:1 / -1;grid-row:2}
   .ask__send .btn{width:100%}
@@ -214,7 +204,7 @@ html:not(.js) .ask__dir,html:not(.js) .ask__row{display:none}
    opening one hangs in the margin before the first word, the closing one ends the last line. */
 .founders{display:grid;grid-template-columns:5fr 7fr;gap:40px 72px;align-items:stretch}
 .founders__side{display:flex;flex-direction:column;justify-content:space-between;gap:32px}
-.founders h2{margin:0;max-width:9ch}
+.founders h2{margin:0}
 .founders__quote{margin:0;position:relative}
 .founders__quote p{font-size:22px;line-height:1.6;max-width:56ch}
 .founders__quote p+p{margin-top:20px}
@@ -341,15 +331,14 @@ html:not(.js) .globe__fig{display:none}
 .ladder__after{margin-top:32px;font:600 20px/1.5 var(--font-text);color:var(--color-heading)}
 .sources{margin-top:14px;max-width:60ch;font:400 15px/1.55 var(--font-text);color:var(--color-text)}
 .sources a{color:var(--color-link);text-underline-offset:3px}
+.ladder__after > p:first-child a{color:inherit;text-underline-offset:4px;text-decoration-thickness:2px}
 
 /* Assessment */
 .assess{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:80px;align-items:start}
 .assess h2{margin-bottom:22px}
 .assess .lead{margin-bottom:26px}
 .honest{max-width:34ch;margin-bottom:34px;font:700 20px/1.45 var(--font-text);color:var(--color-text)}
-.panels{display:grid;grid-template-columns:1fr 1fr;gap:20px}
-.panel{background:var(--color-surface-alt);border-radius:var(--radius-paper);padding:28px 28px 26px}
-.panel h3{font-size:20px;margin-bottom:16px}
+.assess__sub{margin-bottom:16px}
 .fields{list-style:none;padding:0;display:grid;gap:14px}
 .fields li{font-size:17px;line-height:1.45}
 .gets li{position:relative;padding-left:28px}
@@ -419,6 +408,18 @@ html:not(.js) .globe__fig{display:none}
 
 /* Phone bar: appears once the hero button scrolls away */
 .sticky{display:none}
+/* Wider screens: the same button as a pill in the top corner, beside the menu, on the same terms as the bar */
+.topcta{display:none}
+@media (min-width:601px){
+  .topcta{position:fixed;z-index:55;top:74px;right:calc(max(var(--gutter),(100vw - var(--wrap)) / 2) + 60px);display:inline-flex;align-items:center;gap:8px;height:48px;padding:0 20px;border-radius:var(--radius-pill);background:var(--btn-main-bg);color:var(--btn-main-fg);font:700 16px/1 var(--font-text);text-decoration:none;white-space:nowrap;box-shadow:0 4px 18px rgba(1,58,124,.16); /* taste-skill-ignore: the button floats over the page */opacity:0;transform:translateY(-8px);visibility:hidden;transition:opacity .25s ease,transform .25s ease,visibility 0s linear .25s}
+  .topcta.is-visible{opacity:1;transform:none;visibility:visible;transition:opacity .25s ease,transform .25s ease,visibility 0s}
+  .topcta:hover{filter:brightness(.94)}
+  .topcta svg{width:19px;height:19px;flex:none}
+}
+@media (min-width:601px) and (max-width:1100px){.topcta{top:36px}}
+/* tablets: the globe scene's title sits in the top band, so it leaves room for the pill and the menu */
+@media (min-width:601px){.globe.is-live.is-stack .globe__head h2{max-width:calc(100% - 290px)}}
+@media (prefers-reduced-motion:reduce){.topcta,.topcta.is-visible{transition:none}}
 
 /* Tablet */
 @media (max-width:1120px){
@@ -481,7 +482,6 @@ html:not(.js) .globe__fig{display:none}
   .chain__close{margin-top:44px;font-size:18px}
   .tl.is-live .chain__close{font-size:17px}
   .route__name h3{font-size:24px}
-  .panels{grid-template-columns:1fr}
   .team{gap:36px}
   .quote{margin-top:56px;padding-top:36px}
   .quote__text{font-size:24px}
@@ -569,7 +569,7 @@ html:not(.js) .globe__fig{display:none}
     <li><a href="#timing">How long it takes</a></li>
     <li><a href="#assessment">The free assessment</a></li>
     <li><a href="#team">What we handle</a></li>
-    <li><a href="#founders">A word from our founders</a></li>
+    <li><a href="#founders">How we work</a></li>
     <li><a href="#species">Other species</a></li>
     <li><a href="#into-malaysia">Bringing a pet into Malaysia</a></li>
     <li><a href="#questions">Questions people ask</a></li>
@@ -600,58 +600,6 @@ html:not(.js) .globe__fig{display:none}
       <img src="../assets/hero/hero-1600.jpg" srcset="../assets/hero/hero-1600.jpg 1600w, ../assets/hero/hero-2560.jpg 2560w" sizes="100vw" width="2560" height="1440" alt="" fetchpriority="high" decoding="async">
     </picture>
     <video class="hero__video" muted loop playsinline preload="none" disablepictureinpicture data-wide="../assets/hero/hero-wide" data-square="../assets/hero/hero-square"></video>
-  </div>
-</section>
-
-<section class="check" id="check" aria-labelledby="check-title">
-  <div class="wrap check__grid">
-    <div class="check__head">
-      <h2 id="check-title">One message tells you if there's still time.</h2>
-      <p class="check__lead">The eligibility check is free. Fill in what you know and the message is written for you.</p>
-      <ul class="fields gets check__next">
-        <li>We work the dates back from your departure date, against your destination's rules and your airline's.</li>
-        <li>You get a straight answer: possible in time, possible if you start by a certain date, or not possible in time, with your options.</li>
-      </ul>
-    </div>
-    <form class="ask" id="ask" novalidate>
-      <fieldset class="ask__dir">
-        <legend class="sr-only">Which way are you moving?</legend>
-        <label><input type="radio" name="dir" value="out" checked><span>Leaving Malaysia</span></label>
-        <label><input type="radio" name="dir" value="in"><span>Moving to Malaysia</span></label>
-      </fieldset>
-      <div class="ask__row ask__row--2">
-        <div class="ask__field">
-          <label for="ask-place" data-out="Where are you moving to?" data-in="Where are you moving from?">Where are you moving to?</label>
-          <input id="ask-place" type="text" list="ask-places" autocomplete="off" placeholder="Country, and city if you know it" aria-describedby="ask-place-err">
-          <p class="ask__err" id="ask-place-err" role="alert" hidden>Add the country first, so we know which rules to check.</p>
-        </div>
-        <div class="ask__field">
-          <label for="ask-date" data-out="Planned departure date" data-in="Planned arrival date">Planned departure date</label>
-          <input id="ask-date" type="date" aria-describedby="ask-date-hint">
-          <p class="ask__hint" id="ask-date-hint">Leave it empty if you don't know yet.</p>
-        </div>
-      </div>
-      <div class="ask__row ask__row--3">
-        <div class="ask__field">
-          <label for="ask-kind">Your animal</label>
-          <select id="ask-kind"><option value="">Choose</option><option>Dog</option><option>Cat</option><option>Rabbit</option><option>Bird</option><option>Reptile</option><option value="Other animal">Other</option></select>
-        </div>
-        <div class="ask__field">
-          <label for="ask-breed">Breed or species</label>
-          <input id="ask-breed" type="text" autocomplete="off">
-        </div>
-        <div class="ask__field">
-          <label for="ask-age">Age</label>
-          <input id="ask-age" type="text" autocomplete="off" placeholder="e.g. 3 years">
-        </div>
-      </div>
-      <datalist id="ask-places"><option value="Singapore"><option value="United Kingdom"><option value="Japan"><option value="Australia"><option value="New Zealand"><option value="United States"><option value="Canada"><option value="Ireland"><option value="Germany"><option value="Netherlands"><option value="France"><option value="Switzerland"><option value="United Arab Emirates"><option value="Hong Kong"><option value="Taiwan"><option value="China"><option value="South Korea"><option value="Thailand"><option value="Indonesia"><option value="Philippines"><option value="India"></datalist>
-      <div class="ask__send">
-        <a class="btn btn--main" id="ask-wa" href="https://wa.me/60173899208?text=Hi%20FUGR%2C%20I%27d%20like%20a%20free%20eligibility%20assessment.%0AMoving%20to%3A%20%0AAnimal%20%28type%2C%20breed%2C%20age%29%3A%20%0APlanned%20departure%20date%3A%20" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Send on WhatsApp<span class="sr-only"> (opens WhatsApp with your message written)</span></a>
-        <a class="textlink" id="ask-mail" href="mailto:info@fugr.com.my?subject=Free%20eligibility%20assessment&amp;body=Hi%20FUGR%2C%20I%27d%20like%20a%20free%20eligibility%20assessment.%0D%0AMoving%20to%3A%20%0D%0AAnimal%20%28type%2C%20breed%2C%20age%29%3A%20%0D%0APlanned%20departure%20date%3A%20">Send by email instead</a>
-      </div>
-      <p class="ask__note">It's free. Nothing you type is stored on this page. It goes into your own WhatsApp or email, and you press send.</p>
-    </form>
   </div>
 </section>
 
@@ -743,7 +691,7 @@ html:not(.js) .globe__fig{display:none}
           </div>
         </div>
         <div class="ladder__after">
-          <p>Going somewhere else? Most destinations sit between these. Send us yours.</p>
+          <p>Going somewhere else? Most destinations sit between these. <a href="https://wa.me/60173899208?text=Hi%20FUGR%2C%20I%27d%20like%20a%20free%20eligibility%20assessment.%0AMoving%20to%3A%20%0AAnimal%20%28type%2C%20breed%2C%20age%29%3A%20%0APlanned%20departure%20date%3A%20" target="_blank" rel="noopener">Send us yours<span class="sr-only"> (opens WhatsApp)</span></a>.</p>
           <p class="sources">Official rules: <a href="https://www.gov.uk/bring-pet-to-great-britain/listed-and-unlisted-countries" target="_blank" rel="noopener">United Kingdom</a>, <a href="https://avs.nparks.gov.sg/pets/importing-exporting-a-pet/import/dogs-and-cats/" target="_blank" rel="noopener">Singapore</a>, <a href="https://www.maff.go.jp/aqs/english/animal/dog/import-other.html" target="_blank" rel="noopener">Japan</a>, <a href="https://www.agriculture.gov.au/biosecurity-trade/import/industry-advice/2020/38-2020" target="_blank" rel="noopener">Australia</a>. Last checked 16&nbsp;November&nbsp;2026. Rules change, so read the official page for your destination.</p>
         </div>
       </div>
@@ -757,31 +705,55 @@ html:not(.js) .globe__fig{display:none}
       <h2>The free eligibility assessment</h2>
       <p class="lead">Tell us where you're going and when. We check your pet's timeline and tell you, plainly, whether your pet can go with&nbsp;you.</p>
       <p class="honest">If it can't be done in time, we'll say so, and tell you what your options are. That's what the assessment is for.</p>
-      <div class="cta">
-        <a class="btn btn--main" href="https://wa.me/60173899208?text=Hi%20FUGR%2C%20I%27d%20like%20a%20free%20eligibility%20assessment.%0AMoving%20to%3A%20%0AAnimal%20%28type%2C%20breed%2C%20age%29%3A%20%0APlanned%20departure%20date%3A%20" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Check my pet's timeline, free<span class="sr-only"> (opens WhatsApp)</span></a>
-        <p class="cta__note">It's free. Whether you use FUGR afterwards is up to you.</p>
-      </div>
+      <h3 class="assess__sub">What you get back</h3>
+      <ul class="fields gets">
+        <li>A verdict: possible in time, possible if you start by a certain date, or not possible in time, with your options</li>
+        <li>The steps for your destination, in order, with dates worked back from your departure</li>
+        <li>A check of your airline's own rules for your route</li>
+        <li>What you need to do, and what we handle</li>
+      </ul>
     </div>
-    <div class="panels">
-      <div class="panel">
-        <h3>What you send us</h3>
-        <ul class="fields gets">
-          <li>Destination country and city</li>
-          <li>Planned departure date</li>
-          <li>Your animal: species, breed and age</li>
-          <li>Microchip and vaccination records, if you have them. A photo is fine.</li>
-        </ul>
+    <form class="ask" id="ask" novalidate>
+      <h3 class="ask__title">Start your free check</h3>
+      <fieldset class="ask__dir">
+        <legend class="sr-only">Which way are you moving?</legend>
+        <label><input type="radio" name="dir" value="out" checked><span>Leaving Malaysia</span></label>
+        <label><input type="radio" name="dir" value="in"><span>Moving to Malaysia</span></label>
+      </fieldset>
+      <div class="ask__row ask__row--2">
+        <div class="ask__field">
+          <label for="ask-place" data-out="Where are you moving to?" data-in="Where are you moving from?">Where are you moving to?</label>
+          <input id="ask-place" type="text" list="ask-places" autocomplete="off" placeholder="Country, and city if you know it" aria-describedby="ask-place-err">
+          <p class="ask__err" id="ask-place-err" role="alert" hidden>Add the country first, so we know which rules to check.</p>
+        </div>
+        <div class="ask__field">
+          <label for="ask-date" data-out="Planned departure date" data-in="Planned arrival date">Planned departure date</label>
+          <input id="ask-date" type="date" aria-describedby="ask-date-hint">
+          <p class="ask__hint" id="ask-date-hint">Leave it empty if you don't know yet.</p>
+        </div>
       </div>
-      <div class="panel">
-        <h3>What you get back</h3>
-        <ul class="fields gets">
-          <li>A verdict: possible in time, possible if you start by a certain date, or not possible in time, with your options</li>
-          <li>The steps for your destination, in order, with dates worked back from your departure</li>
-          <li>A check of your airline's own rules for your route</li>
-          <li>What you need to do, and what we handle</li>
-        </ul>
+      <div class="ask__row ask__row--3">
+        <div class="ask__field">
+          <label for="ask-kind">Your animal</label>
+          <select id="ask-kind"><option value="">Choose</option><option>Dog</option><option>Cat</option><option>Rabbit</option><option>Bird</option><option>Reptile</option><option value="Other animal">Other</option></select>
+        </div>
+        <div class="ask__field">
+          <label for="ask-breed">Breed or species</label>
+          <input id="ask-breed" type="text" autocomplete="off">
+        </div>
+        <div class="ask__field">
+          <label for="ask-age">Age</label>
+          <input id="ask-age" type="text" autocomplete="off" placeholder="e.g. 3 years">
+        </div>
       </div>
-    </div>
+      <datalist id="ask-places"><option value="Singapore"><option value="United Kingdom"><option value="Japan"><option value="Australia"><option value="New Zealand"><option value="United States"><option value="Canada"><option value="Ireland"><option value="Germany"><option value="Netherlands"><option value="France"><option value="Switzerland"><option value="United Arab Emirates"><option value="Hong Kong"><option value="Taiwan"><option value="China"><option value="South Korea"><option value="Thailand"><option value="Indonesia"><option value="Philippines"><option value="India"></datalist>
+      <div class="ask__send">
+        <a class="btn btn--main" id="ask-wa" href="https://wa.me/60173899208?text=Hi%20FUGR%2C%20I%27d%20like%20a%20free%20eligibility%20assessment.%0AMoving%20to%3A%20%0AAnimal%20%28type%2C%20breed%2C%20age%29%3A%20%0APlanned%20departure%20date%3A%20" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Send on WhatsApp<span class="sr-only"> (opens WhatsApp with your message written)</span></a>
+        <a class="textlink" id="ask-mail" href="mailto:info@fugr.com.my?subject=Free%20eligibility%20assessment&amp;body=Hi%20FUGR%2C%20I%27d%20like%20a%20free%20eligibility%20assessment.%0D%0AMoving%20to%3A%20%0D%0AAnimal%20%28type%2C%20breed%2C%20age%29%3A%20%0D%0APlanned%20departure%20date%3A%20">Send by email instead</a>
+      </div>
+      <p class="ask__note">It's free. Nothing you type is stored on this page. It goes into your own WhatsApp or email, and you press send.</p>
+      <p class="ask__note">Have microchip or vaccination records? Send a photo of them in the same chat.</p>
+    </form>
   </div>
 </section>
 
@@ -818,7 +790,7 @@ html:not(.js) .globe__fig{display:none}
   <div class="wrap">
     <div class="founders">
       <div class="founders__side">
-        <h2 id="founders-title">A word from our founders</h2>
+        <h2 id="founders-title">How we work</h2>
         <p class="founders__sign">The founders of FUGR</p>
       </div>
       <blockquote class="founders__quote">
@@ -899,6 +871,8 @@ html:not(.js) .globe__fig{display:none}
     </div>
   </div>
 </footer>
+
+<a class="topcta" id="top-cta" href="https://wa.me/60173899208?text=Hi%20FUGR%2C%20I%27d%20like%20a%20free%20eligibility%20assessment.%0AMoving%20to%3A%20%0AAnimal%20%28type%2C%20breed%2C%20age%29%3A%20%0APlanned%20departure%20date%3A%20" target="_blank" rel="noopener" data-ui><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Free timeline check<span class="sr-only"> (opens WhatsApp)</span></a>
 
 <div class="sticky" id="sticky-cta">
   <a class="btn btn--main" href="https://wa.me/60173899208?text=Hi%20FUGR%2C%20I%27d%20like%20a%20free%20eligibility%20assessment.%0AMoving%20to%3A%20%0AAnimal%20%28type%2C%20breed%2C%20age%29%3A%20%0APlanned%20departure%20date%3A%20" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Check my pet's timeline, free<span class="sr-only"> (opens WhatsApp)</span></a>
@@ -1020,12 +994,14 @@ html:not(.js) .globe__fig{display:none}
     write();
   }
 
-  /* Phone bar: shows once the hero button has scrolled away, hides at the closing section, and steps aside
-     while the form is on screen (the form has its own send button, and the keyboard needs the room). */
+  /* Phone bar, and the pill in the top corner on wider screens: they show once the hero button has scrolled
+     away, hide at the closing section, and step aside while the form is on screen (the form has its own
+     send button, and on phones the keyboard needs the room). */
   var bar = document.getElementById("sticky-cta"), hero = document.getElementById("hero-cta"), closing = document.getElementById("start");
   if (bar && hero && closing && "IntersectionObserver" in window) {
     var heroSeen = true, closingSeen = false, formSeen = false;
-    var update = function () { bar.classList.toggle("is-visible", !heroSeen && !closingSeen && !formSeen); };
+    var topCta = document.getElementById("top-cta");
+    var update = function () { var on = !heroSeen && !closingSeen && !formSeen; bar.classList.toggle("is-visible", on); if (topCta) topCta.classList.toggle("is-visible", on); };
     new IntersectionObserver(function (e) { heroSeen = e[0].isIntersecting; update(); }).observe(hero);
     new IntersectionObserver(function (e) { closingSeen = e[0].isIntersecting; update(); }).observe(closing);
     if (ask) new IntersectionObserver(function (e) { formSeen = e[0].isIntersecting; update(); }, { rootMargin: "0px 0px -25% 0px" }).observe(ask);
@@ -1041,7 +1017,7 @@ html:not(.js) .globe__fig{display:none}
 <script>
 /* The first screen as you scroll. Wide screens: the masthead and the hero hold still for most of a screen
    while the camera pushes in on the dog and the cat and the words fade; then the page moves on to the
-   free check and the microchip. Narrow screens: the photo zooms in as it passes, from its full frame at the top of the page. Nothing moves when reduced
+   microchip. Narrow screens: the photo zooms in as it passes, from its full frame at the top of the page. Nothing moves when reduced
    motion is on. Made before the scenes below, so their positions are measured after this hold is added. */
 (function () {
   if (!window.gsap || !window.ScrollTrigger) return;
@@ -1079,7 +1055,7 @@ html:not(.js) .globe__fig{display:none}
     var items = [];
     ids.forEach(function (id) {
       var sec = document.getElementById(id); if (!sec) return;
-      var all = Array.prototype.slice.call(sec.querySelectorAll("h2, h3, p, li, figure, details, .btn, .textlink, blockquote > p"));
+      var all = Array.prototype.slice.call(sec.querySelectorAll("h2, h3, p, li, figure, details, .btn, .textlink, blockquote > p, .ask"));   // the form comes in as one piece
       all.forEach(function (el) {
         if (el.closest(".qmark")) return;
         for (var i = 0; i < all.length; i++) if (all[i] !== el && all[i].contains(el)) return;   // outermost only
@@ -1172,11 +1148,11 @@ html:not(.js) .globe__fig{display:none}
     panel.classList.toggle("is-open", open);
     if (open) { var a = panel.querySelector("a"); if (a) a.focus({ preventScroll: true }); }
   };
-  // The menu waits until the visitor has scrolled past the first screen and the free check under it, so the
-  // first screen stays clear. After that it stays, on this visit and the next ones.
+  // The menu waits until the visitor has scrolled past the first screen, so the first screen stays clear.
+  // After that it stays, on this visit and the next ones.
   var KEY = "fugr-menu", seen = false;
   try { seen = localStorage.getItem(KEY) === "1"; } catch (e) {}
-  var gate = document.getElementById("check");
+  var gate = document.querySelector(".hero");
   if (!seen && gate) {
     btn.classList.add("is-waiting");
     var check = function () {
