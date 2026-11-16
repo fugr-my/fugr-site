@@ -19,6 +19,7 @@
 <meta property="og:locale" content="en_GB">
 <meta name="twitter:card" content="summary_large_image">
 <script>document.documentElement.classList.add("js");</script>
+<script src="../assets/track.js" defer></script>
 <link rel="stylesheet" href="../assets/scenes/stage.css">
 <link rel="icon" type="image/png" href="../assets/symbol.png">
 <link rel="apple-touch-icon" href="../assets/symbol.png">
@@ -162,6 +163,39 @@ h1,h2,.quote__text{text-wrap:balance}
 .cta{display:flex;flex-direction:column;align-items:flex-start;gap:14px}
 .cta__note{font-size:15px;line-height:1.5;color:var(--color-text-muted);max-width:44ch}
 .section--mist .cta__note{color:var(--color-text)}
+
+/* The free check, straight after the first screen: what to send, what happens, what comes back, and the
+   button. The full assessment section further down keeps the detail. */
+.check{padding:80px 0 88px;background:var(--color-surface-alt)}
+.check__grid{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,8fr);gap:64px;align-items:start}
+.check h2{font-size:36px;line-height:1.1;max-width:14ch;margin-bottom:16px}
+.check__lead{margin-bottom:28px;font-size:20px;line-height:1.5}
+.check .cta__note{color:var(--color-text)}
+.check__steps{list-style:none;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;counter-reset:check}
+.check__steps li{counter-increment:check;padding:24px 24px 26px;background:var(--color-surface);border-radius:var(--radius-paper)}
+.check__steps li::before{content:counter(check);display:flex;align-items:center;justify-content:center;width:36px;height:36px;margin-bottom:18px;border-radius:50%;background:var(--color-heading);color:var(--color-on-inverse);font:800 16px/1 var(--font-text);font-variant-numeric:tabular-nums}
+.check__steps h3{margin-bottom:8px}
+.check__steps p{font-size:16px;line-height:1.55}
+@media (max-width:1120px){
+  .check__grid{grid-template-columns:1fr;gap:40px}
+  .check h2{max-width:none}
+}
+@media (max-width:767px){
+  .check{padding:56px 0 64px}
+  .check h2{font-size:28px}
+  .check__lead{font-size:18px;margin-bottom:24px}
+  .check__steps{grid-template-columns:1fr;gap:12px}
+  .check__steps li{display:grid;grid-template-columns:36px minmax(0,1fr);column-gap:16px;padding:20px}
+  .check__steps li::before{grid-row:1 / span 2;margin:0}
+  .check__steps h3{align-self:center;margin:5px 0 6px}
+  .check__steps p{grid-column:2}
+}
+/* Phones with the floating WhatsApp bar: the bar is this block's button, so the same button is not shown twice */
+@media (max-width:600px){
+  .js .check .cta{display:none}
+  .check__lead{margin-bottom:0}
+  .check__grid{gap:28px}
+}
 
 /* Sections */
 .section{padding:var(--section) 0}
@@ -550,7 +584,7 @@ html:not(.js) .globe__fig{display:none}
 </nav>
 <header class="masthead">
   <div class="wrap">
-    <a class="brand" href="#main"><img src="../assets/logo.png" width="132" height="125" alt="FUGR"></a>
+    <a class="brand" href="#main"><img src="../assets/logo-264.webp" width="132" height="125" alt="FUGR"></a>
     <p class="masthead__note">Pet Relocation Based in Malaysia</p>
   </div>
 </header>
@@ -575,7 +609,25 @@ html:not(.js) .globe__fig{display:none}
   </div>
 </section>
 
-<section class="section scene tl" id="sequence" data-scene="chain-timeline" data-options='{"hold":5}' aria-labelledby="chain-title">
+<section class="check" id="check" aria-labelledby="check-title">
+  <div class="wrap check__grid">
+    <div class="check__head">
+      <h2 id="check-title">One message tells you if there's still time.</h2>
+      <p class="check__lead">The eligibility check is free. This is how it works.</p>
+      <div class="cta">
+        <a class="btn btn--main" href="https://wa.me/60173899208?text=Hi%20FUGR%2C%20I%27d%20like%20a%20free%20eligibility%20assessment.%0AMoving%20to%3A%20%0AAnimal%20%28type%2C%20breed%2C%20age%29%3A%20%0APlanned%20departure%20date%3A%20" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Check my pet's timeline, free<span class="sr-only"> (opens WhatsApp)</span></a>
+        <p class="cta__note">It's free. Whether you use FUGR afterwards is up to you.</p>
+      </div>
+    </div>
+    <ol class="check__steps">
+      <li><h3>Send three things</h3><p>Where you're going, when you leave, and your animal's species, breed and age.</p></li>
+      <li><h3>We work the dates back</h3><p>From your departure date, against your destination's rules and your airline's.</p></li>
+      <li><h3>You get a straight answer</h3><p>Possible in time, possible if you start by a certain date, or not possible in time, with your options.</p></li>
+    </ol>
+  </div>
+</section>
+
+<section class="section scene tl" id="sequence" data-scene="chain-timeline" data-options='{"hold":2.5}' aria-labelledby="chain-title">
   <div class="scene-stage">
   <div class="wrap tl__wrap">
     <div class="tl__top">
@@ -607,7 +659,7 @@ html:not(.js) .globe__fig{display:none}
   </div>
 </section>
 
-<section class="section section--mist scene globe" id="timing" data-scene="route-globe" data-options='{"hold":4}' aria-labelledby="timing-title">
+<section class="section section--mist scene globe" id="timing" data-scene="route-globe" data-options='{"hold":2}' aria-labelledby="timing-title">
   <div class="scene-stage">
     <div class="wrap globe__wrap">
       <div class="globe__head">
@@ -731,7 +783,7 @@ html:not(.js) .globe__fig{display:none}
   </div>
 </section>
 
-<section class="section scene crate" id="cargo" data-scene="crate-close" data-options='{"hold":3}' aria-label="Your pet may fly as cargo. We never treat it like cargo.">
+<section class="section scene crate" id="cargo" data-scene="crate-close" data-options='{"hold":1}' aria-label="Your pet may fly as cargo. We never treat it like cargo.">
   <div class="scene-stage">
     <div class="wrap crate__wrap">
       <div class="crate__media" data-count="72" data-desktop="../assets/crate/d-{n}.webp" data-phone="../assets/crate/p-{n}.webp">
@@ -769,7 +821,7 @@ html:not(.js) .globe__fig{display:none}
       <p>Many relocation services only handle cats and dogs. Small animals and exotics often need extra permits, and some breeds and species can't enter some countries at all, whatever the paperwork. Tell us the species and the destination, and we'll tell you early whether it can travel.</p>
       <a class="btn btn--navy" href="https://wa.me/60173899208?text=Hi%20FUGR%2C%20I%27d%20like%20a%20free%20eligibility%20assessment.%0AMoving%20to%3A%20%0AAnimal%20%28type%2C%20breed%2C%20age%29%3A%20%0APlanned%20departure%20date%3A%20" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Ask about my animal<span class="sr-only"> (opens WhatsApp)</span></a>
     </div>
-    <figure class="photo photo--4x3"><picture><source type="image/webp" srcset="../assets/small-animal-800.webp 800w, ../assets/small-animal.webp 1600w" sizes="(max-width: 960px) 100vw, 480px"><img src="../assets/small-animal.jpg" width="1600" height="1195" loading="eager" decoding="async" alt="A rabbit resting in a pet travel carrier on a clinic counter"></picture></figure>
+    <figure class="photo photo--4x3"><picture><source type="image/webp" srcset="../assets/small-animal-800.webp 800w, ../assets/small-animal.webp 1600w" sizes="(max-width: 960px) 100vw, 480px"><img src="../assets/small-animal.jpg" width="1600" height="1195" loading="lazy" decoding="async" alt="A rabbit resting in a pet travel carrier on a clinic counter"></picture></figure>
   </div>
 </section>
 
@@ -777,7 +829,7 @@ html:not(.js) .globe__fig{display:none}
   <div class="wrap split">
     <div>
       <h2>Bringing a pet into Malaysia?</h2>
-      <figure class="handover"><picture><source type="image/webp" srcset="../assets/handover-600.webp 600w, ../assets/handover.webp 1200w" sizes="(max-width: 960px) 100vw, 460px"><img src="../assets/handover.jpg" width="1200" height="800" loading="eager" decoding="async" alt="Two cats in travel carriers at a handover outside a house"></picture><figcaption>A real handover, door to door.</figcaption></figure>
+      <figure class="handover"><picture><source type="image/webp" srcset="../assets/handover-600.webp 600w, ../assets/handover.webp 1200w" sizes="(max-width: 960px) 100vw, 460px"><img src="../assets/handover.jpg" width="1200" height="800" loading="lazy" decoding="async" alt="Two cats in travel carriers at a handover outside a house"></picture><figcaption>A real handover, door to door.</figcaption></figure>
     </div>
     <div class="split__copy">
       <p>Moving to Johor, or anywhere in Peninsular Malaysia, from Singapore? We collect your pet in Singapore, sort out the Malaysian import paperwork, and drive your pet across ourselves, door to door. We'll tell you what Singapore needs from you before your pet leaves.</p>
@@ -821,7 +873,7 @@ html:not(.js) .globe__fig{display:none}
 
 <footer class="footer">
   <div class="wrap footer__row">
-    <img src="../assets/logo.png" width="120" height="114" alt="FUGR">
+    <img src="../assets/logo-264.webp" width="120" height="114" alt="FUGR" loading="lazy" decoding="async">
     <div class="footer__text">
       <p class="legal">Fugr International Sdn. Bhd. (202601033028)</p>
       <p>29-02, Jalan Aliff 6, Taman Damansara Aliff, 81200 Johor Bahru, Johor</p>
@@ -929,14 +981,14 @@ html:not(.js) .globe__fig{display:none}
 <script>
 /* The first screen as you scroll. Wide screens: the masthead and the hero hold still for most of a screen
    while the camera pushes in on the dog and the cat and the words fade; then the page moves on to the
-   microchip. Narrow screens: the photo zooms in as it passes, from its full frame at the top of the page. Nothing moves when reduced
+   free check and the microchip. Narrow screens: the photo zooms in as it passes, from its full frame at the top of the page. Nothing moves when reduced
    motion is on. Made before the scenes below, so their positions are measured after this hold is added. */
 (function () {
   if (!window.gsap || !window.ScrollTrigger) return;
   var hero = document.querySelector(".hero"), mast = document.querySelector(".masthead");
   var pic = document.querySelectorAll(".hero__media img, .hero__video");
   if (!hero || !mast || !pic.length) return;
-  var hold = function () { return Math.round(window.innerHeight * 0.6); };
+  var hold = function () { return Math.round(window.innerHeight * 0.4); };
   var mm = gsap.matchMedia();
   mm.add("(min-width: 1100px) and (prefers-reduced-motion: no-preference)", function () {
     ScrollTrigger.create({ trigger: hero, start: function () { return "top " + mast.offsetHeight + "px"; }, end: function () { return "+=" + hold(); }, pin: true, pinSpacing: true, invalidateOnRefresh: true });
@@ -963,7 +1015,7 @@ html:not(.js) .globe__fig{display:none}
   if (!window.gsap || !window.ScrollTrigger) return;
   var mm = gsap.matchMedia();
   mm.add("(prefers-reduced-motion: no-preference)", function () {
-    var ids = ["assessment", "team", "founders", "species", "into-malaysia", "questions", "start"];
+    var ids = ["check", "assessment", "team", "founders", "species", "into-malaysia", "questions", "start"];
     var items = [];
     ids.forEach(function (id) {
       var sec = document.getElementById(id); if (!sec) return;
@@ -1060,11 +1112,11 @@ html:not(.js) .globe__fig{display:none}
     panel.classList.toggle("is-open", open);
     if (open) { var a = panel.querySelector("a"); if (a) a.focus({ preventScroll: true }); }
   };
-  // The menu waits until the visitor has scrolled past the free assessment, where the main story ends,
-  // so a first visit reads the page in order. After that it stays, on this visit and the next ones.
+  // The menu waits until the visitor has scrolled past the first screen and the free check under it, so the
+  // first screen stays clear. After that it stays, on this visit and the next ones.
   var KEY = "fugr-menu", seen = false;
   try { seen = localStorage.getItem(KEY) === "1"; } catch (e) {}
-  var gate = document.getElementById("assessment");
+  var gate = document.getElementById("check");
   if (!seen && gate) {
     btn.classList.add("is-waiting");
     var check = function () {

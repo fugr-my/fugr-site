@@ -52,7 +52,9 @@
       box.classList.add('has-frame');
     };
     if ('ResizeObserver' in window) new ResizeObserver(size).observe(box); else size();
-    return { n, start, show(i) { current = clamp(i, 0, n - 1); queue(); } };
+    // one frame only (the finished composition needs just the last one)
+    const only = (i, isPhone) => { if (started) return; phone = !!isPhone; load(i); };
+    return { n, start, only, show(i) { current = clamp(i, 0, n - 1); queue(); } };
   };
 
   Scenes['crate-close'] = (root, opts = {}) => {
@@ -73,17 +75,21 @@
     };
 
     const finished = () => {
-      if (frames) { frames.start(isPhone()); frames.show(frames.n - 1); }
+      // the still under the canvas is already the closed crate: no frames are fetched
       [say1, say2].forEach((el) => el && el.classList.add('is-on'));
     };
 
-    // Start loading the frames a screen and a half before the scene arrives.
-    if (frames && 'IntersectionObserver' in window) {
-      const io = new IntersectionObserver((e) => { if (e[0].isIntersecting) { frames.start(isPhone()); io.disconnect(); } }, { rootMargin: '300% 0px' });
+    // The clip's frames are fetched only when the scene is running and within two screens of the visitor.
+    // A visitor who never scrolls this far never downloads them.
+    const watch = () => {
+      if (!frames || !('IntersectionObserver' in window)) { if (frames && root.classList.contains('is-live')) frames.start(isPhone()); return; }
+      const io = new IntersectionObserver((e) => {
+        if (!e[0].isIntersecting || !root.classList.contains('is-live')) return;
+        frames.start(isPhone()); io.disconnect();
+      }, { rootMargin: '200% 0px' });
       io.observe(root);
-    } else if (frames) frames.start(isPhone());
-    // once the page itself has loaded, fetch the frames anyway, so they are in before the visitor gets here
-    if (frames) window.addEventListener('load', () => setTimeout(() => frames.start(isPhone()), 1200));
+    };
+    if (document.readyState === 'complete') watch(); else window.addEventListener('load', watch);
 
     return Stage.scene(root, {
       hold: opts.hold ?? 3,
