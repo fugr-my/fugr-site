@@ -279,6 +279,33 @@ html:not(.js) .ask__dir,html:not(.js) .ask__row{display:none}
 .tl.is-live .chain__close{margin-top:48px;opacity:0;transform:translateY(10px);transition:opacity .45s ease,transform .45s ease}
 .tl.is-live .chain__close.is-active{opacity:1;transform:none}
 
+/* The chain with motion allowed (.is-flow, set by chain-timeline.js): an ordinary scrolling section on every
+   screen. The picture is scrubbed as it passes; a line draws along the steps and each step arrives at its
+   number; the wording arrives like the rest of the page. All of it is undone when the class goes. */
+.tl.is-flow .chain::before{display:none}
+.tl.is-flow .chain > li{opacity:0;transform:translateY(24px);transition:opacity .8s cubic-bezier(.215,.61,.355,1),transform .8s cubic-bezier(.215,.61,.355,1)}
+.tl.is-flow .chain > li.is-on{opacity:1;transform:none}
+/* up to 1120px: the steps in a column, the line down their left side */
+@media (max-width:1120px){
+  .tl.is-flow .chain{display:grid;grid-template-columns:1fr;row-gap:30px}
+  .tl.is-flow .chain > li{display:grid;grid-template-columns:44px minmax(0,1fr);column-gap:18px;max-width:640px}
+  .tl.is-flow .chain > li::before{grid-row:1 / span 2;margin:0}
+  .tl.is-flow .chain h3{align-self:center;margin:10px 0 6px}
+  .tl.is-flow .chain p{grid-column:2}
+  .tl.is-flow .chain::after{content:"";display:block;position:absolute;left:20px;top:22px;width:4px;height:calc(var(--line-len,0px) * var(--flow,0));border-radius:2px;background:var(--color-heading)}
+}
+/* wider: the steps in a row, the line across their numbers (its length follows --fill), a larger picture */
+@media (min-width:1121px){
+  .tl.is-flow .tl__top{grid-template-columns:minmax(0,1fr) minmax(0,420px)}
+  .tl.is-flow .chain__when{font:800 24px/1.1 var(--font-display);letter-spacing:-.02em;margin-bottom:10px}
+}
+.tl.is-flow .flow{opacity:0;transform:translateY(40px);transition:opacity .95s cubic-bezier(.215,.61,.355,1),transform .95s cubic-bezier(.215,.61,.355,1)}
+.tl.is-flow .flow.is-above{transform:translateY(-40px)}
+.tl.is-flow h2.flow{transform:translateY(64px);clip-path:inset(0% 0% 100% 0%);transition:opacity 1.1s cubic-bezier(.19,1,.22,1),transform 1.1s cubic-bezier(.19,1,.22,1),clip-path 1.1s cubic-bezier(.19,1,.22,1)}
+.tl.is-flow h2.flow.is-above{transform:translateY(-64px);clip-path:inset(100% 0% 0% 0%)}
+.tl.is-flow .flow.is-in{opacity:1;transform:none}
+.tl.is-flow h2.flow.is-in{clip-path:inset(0% 0% -25% 0%)}
+
 /* Routes as a scroll scene (assets/scenes/route-globe.js). Without .is-live: the last view, every route drawn. */
 .globe{--globe-land:var(--navy-700);--globe-disc:var(--white);--globe-route:var(--orange-500);--globe-broken:var(--slate-500);--globe-dot:var(--navy-700)}
 .globe__head{max-width:640px}
