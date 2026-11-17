@@ -178,7 +178,7 @@ h1,h2,.quote__text{text-wrap:balance}
 .ask__dir input:focus-visible + span{outline:3px solid var(--color-focus);outline-offset:3px}
 .ask__row{display:grid;gap:16px;margin-bottom:18px}
 .ask__row--2{grid-template-columns:minmax(0,3fr) minmax(0,2fr)}
-.ask__row--pair{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+.ask__row--pair{grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:end}
 .ask__row--breed{grid-template-columns:minmax(0,3fr) minmax(0,2fr)}
 .ask__field label{display:block;margin-bottom:6px;font:600 15px/1.35 var(--font-text);color:var(--color-heading)}
 .ask__field input,.ask__field select{display:block;width:100%;min-height:48px;padding:10px 12px;border:1.5px solid var(--color-text-muted);border-radius:var(--radius-control);background:var(--color-surface);color:var(--color-text);font:400 17px/1.3 var(--font-text)}
@@ -189,6 +189,7 @@ h1,h2,.quote__text{text-wrap:balance}
 .ask__field input[aria-invalid="true"]{border-color:var(--color-heading);border-width:2.5px}
 .ask__hint,.ask__err{margin-top:6px;font-size:14px;line-height:1.4;color:var(--color-text)}
 .ask__err{font-weight:700;color:var(--color-heading)}
+.ask__hint--row{grid-column:1 / -1;margin-top:-10px}
 .ask__send{display:flex;flex-wrap:wrap;align-items:center;gap:10px 28px;margin-top:26px}
 .ask__done{margin-top:18px;padding:16px 18px;background:var(--color-surface);border-left:6px solid var(--color-heading);border-radius:var(--radius-paper)}
 .ask__done p{font-size:15px;line-height:1.5;color:var(--color-text)}
@@ -582,9 +583,9 @@ html:not(.js) .globe__fig{display:none}
   .globe__label b{font-size:13px}
   .globe.is-live .globe__label span{display:none} /* the card under the globe already says Weeks or Months */
 }
-/* Phones with room to spare: the official-rules links get a taller target */
-@media (max-width:767px) and (min-height:660px){
-  .sources a{display:inline-block;padding:6px 2px}
+/* Phones: the official-rules links get a taller tap area. They stay inline, so the sentence wraps as text does */
+@media (max-width:767px){
+  .sources a{padding:6px 0}
 }
 /* Short phone screens (a browser with its bars showing): the country cards keep clear of the WhatsApp bar */
 @media (max-width:767px) and (max-height:720px){
@@ -785,12 +786,12 @@ html:not(.js) .globe__fig{display:none}
         <div class="ask__field">
           <label for="ask-count">How many pets?</label>
           <input id="ask-count" type="number" min="1" max="99" step="1" inputmode="numeric" value="1" aria-describedby="ask-count-hint">
-          <p class="ask__hint" id="ask-count-hint">More than one? Tell us about the others in the chat.</p>
         </div>
         <div class="ask__field">
           <label for="ask-kind">Your animal</label>
           <select id="ask-kind"><option value="">Choose</option><option>Dog</option><option>Cat</option><option>Rabbit</option><option>Bird</option><option>Reptile</option><option value="Other animal">Other</option></select>
         </div>
+        <p class="ask__hint ask__hint--row" id="ask-count-hint">More than one? Tell us about the others in the chat.</p>
       </div>
       <div class="ask__row ask__row--breed">
         <div class="ask__field">
@@ -941,12 +942,12 @@ html:not(.js) .globe__fig{display:none}
         <div class="ask__field">
           <label for="ask2-count">How many pets?</label>
           <input id="ask2-count" type="number" min="1" max="99" step="1" inputmode="numeric" value="1" aria-describedby="ask2-count-hint">
-          <p class="ask__hint" id="ask2-count-hint">More than one? Tell us about the others in the chat.</p>
         </div>
         <div class="ask__field">
           <label for="ask2-kind">Your animal</label>
           <select id="ask2-kind"><option value="">Choose</option><option>Dog</option><option>Cat</option><option>Rabbit</option><option>Bird</option><option>Reptile</option><option value="Other animal">Other</option></select>
         </div>
+        <p class="ask__hint ask__hint--row" id="ask2-count-hint">More than one? Tell us about the others in the chat.</p>
       </div>
       <div class="ask__row ask__row--breed">
         <div class="ask__field">
