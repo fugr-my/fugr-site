@@ -213,7 +213,8 @@
           const clip = { p: 0 };
           chip.show(0);
           gsap.to(clip, { p: 1, ease: 'none', onUpdate: () => chip.show(clip.p * (chip.n - 1)),
-            scrollTrigger: { trigger: chipBox, start: 'top 80%', end: 'center 32%', scrub: 0.5 } });
+            // it starts once the picture's top edge has reached the middle of the screen, so its first frames are seen
+            scrollTrigger: { trigger: chipBox, start: 'top 50%', end: 'top 5%', scrub: 0.5 } });
         }
 
         // the line and the steps

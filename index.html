@@ -294,9 +294,12 @@ html:not(.js) .ask__dir,html:not(.js) .ask__row{display:none}
   .tl.is-flow .chain p{grid-column:2}
   .tl.is-flow .chain::after{content:"";display:block;position:absolute;left:20px;top:22px;width:4px;height:calc(var(--line-len,0px) * var(--flow,0));border-radius:2px;background:var(--color-heading)}
 }
-/* wider: the steps in a row, the line across their numbers (its length follows --fill), a larger picture */
+/* wider: the steps in a row, the line across their numbers (its length follows --fill); the picture large and
+   centred under the heading */
 @media (min-width:1121px){
-  .tl.is-flow .tl__top{grid-template-columns:minmax(0,1fr) minmax(0,420px)}
+  .tl.is-flow .tl__top{display:block}
+  .tl.is-flow .tl__media{width:min(560px,60svh);margin:56px auto 0}
+  .tl.is-flow .tl__say{text-align:center}
   .tl.is-flow .chain__when{font:800 24px/1.1 var(--font-display);letter-spacing:-.02em;margin-bottom:10px}
 }
 .tl.is-flow .flow{opacity:0;transform:translateY(40px);transition:opacity .95s cubic-bezier(.215,.61,.355,1),transform .95s cubic-bezier(.215,.61,.355,1)}
