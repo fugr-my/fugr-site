@@ -103,7 +103,7 @@
     const cards = [...root.querySelectorAll('.ladder .route'), root.querySelector('.ladder__after')].filter(Boolean);
     const wrapEl = root.querySelector('.globe__wrap'), title = root.querySelector('.globe__head h2');
     let W = 0, H = 0, dpr = 1, live = false, phone = false, state = { lon0: END.lon, lat0: END.lat, d: { uk: 1, sg: 1, jp: 1, au: 1 } };
-    let lastCard = null, cardTop = '';
+    let lastCard = null, cardTop = '', titleBottom = 96;   // where the title ends, from the top of the stage
 
     // Wide screens: the globe on the right, the words on the left. Narrow ones (phones, and tablets held
     // upright): the globe under the title, the words under the globe.
@@ -114,9 +114,11 @@
         return { cx: W * 0.68, cy: H * 0.54, r };
       }
       if (live) {
-        // on short phone screens the globe gives up room so the country card ends above the WhatsApp bar
-        const r = Math.min(W * 0.36, H * (W < 600 ? (H < 620 ? 0.09 : H < 720 ? 0.115 : 0.15) : 0.2));
-        return { cx: W / 2, cy: Math.max(r + 96, H * 0.29), r };
+        // on short phone screens the globe gives up room so the country card ends above the WhatsApp bar:
+        // it is smaller, and it sits right under the title instead of a fixed distance down
+        const short = H < 620;
+        const r = Math.min(W * 0.36, H * (W < 600 ? (short ? (W < 340 ? 0.075 : 0.09) : H < 720 ? 0.115 : 0.15) : 0.2));
+        return { cx: W / 2, cy: short ? r + titleBottom + 16 : Math.max(r + 96, H * 0.29), r };
       }
       const r = Math.min(W, H) * 0.42;
       return { cx: W / 2, cy: H / 2, r };
@@ -251,6 +253,7 @@
         d[k] = p <= a ? 0 : p >= b ? 1 : (p - a) / (b - a);
       }
       state = { lon0, lat0, d };
+      titleBottom = title.getBoundingClientRect().bottom - wrapEl.getBoundingClientRect().top;
       draw();
       placeCards();
       showCard(p);

@@ -130,6 +130,7 @@ h1,h2,.quote__text{text-wrap:balance}
 .hero .wrap{width:100%}
 .hero h1{max-width:none;margin-bottom:28px;font-size:clamp(44px,6vw,88px)}
 .hero__sub{max-width:40ch;margin-bottom:40px;font:600 24px/1.4 var(--font-text);color:var(--color-text)}
+.hero__offer{display:block;margin-top:.3em}
 .hero__actions{display:flex;flex-wrap:wrap;align-items:center;gap:16px 32px}
 .hero__note{flex-basis:100%;margin:-4px 0 0;font-size:15px;line-height:1.5;color:var(--color-text)}
 /* "Here's why" with an arrow: the first screen's cue that the page carries on. The arrow only moves on hover. */
@@ -159,7 +160,7 @@ h1,h2,.quote__text{text-wrap:balance}
   .hero__media img{aspect-ratio:auto}
   .hero__actions{flex-direction:column;align-items:flex-start;gap:14px}
   .hero h1{max-width:8.6em;font-size:clamp(44px,4.6vw,70px)}
-  .hero__sub{max-width:38ch;font-size:22px}
+  .hero__sub{max-width:min(560px,44vw);font-size:20px}
 }
 .cta{display:flex;flex-direction:column;align-items:flex-start;gap:14px}
 .cta__note{font-size:15px;line-height:1.5;color:var(--color-text-muted);max-width:44ch}
@@ -634,7 +635,7 @@ html:not(.js) .globe__fig{display:none}
 <section class="hero">
   <div class="wrap">
     <h1>Leaving Malaysia with a pet? Check there's still time.</h1>
-    <p class="hero__sub">Some countries need six months or more. <a class="hero__why" href="#sequence">Here's why<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 4.5v14.5M5.75 12.75 12 19l6.25-6.25" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/></svg></a> Send your destination and date, and get a free answer on WhatsApp.</p>
+    <p class="hero__sub">Some countries need six months or more. <a class="hero__why" href="#sequence">Here's why<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 4.5v14.5M5.75 12.75 12 19l6.25-6.25" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/></svg></a> <span class="hero__offer">Send your destination and date. Get a free answer on WhatsApp.</span></p>
     <div class="hero__actions">
         <a class="btn btn--main" id="hero-cta" href="https://wa.me/60173899208?text=Hi%20FUGR%2C%20I%27d%20like%20a%20free%20eligibility%20check.%0AMoving%20to%3A%20%0AAnimal%20%28type%2C%20breed%2C%20age%29%3A%20%0APlanned%20departure%20date%3A%20" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Check if my pet can fly, free<span class="sr-only"> (opens WhatsApp)</span></a>
       <p class="hero__note">Opens WhatsApp. Free.</p>
@@ -675,7 +676,7 @@ html:not(.js) .globe__fig{display:none}
     <ol class="chain">
       <li><p class="chain__when" data-plan="first">by 2 November 2026</p><h3>Microchip</h3><p>Always first. For the UK and Japan, a rabies vaccine given before the chip doesn't count.</p></li>
       <li><p class="chain__when" data-plan="second">by 2 December 2026</p><h3>Rabies vaccination</h3><p>Then a wait before the next step counts. The UK needs 21 days. Japan needs a second dose at least 30 days after the first.</p></li>
-      <li><p class="chain__when" data-plan="blood">by 3 December 2026</p><h3>Rabies blood test, where required</h3><p>Taken weeks after the vaccine, at an approved laboratory. Results can expire: Singapore only accepts a sample taken within 12 months of export.</p></li>
+      <li><p class="chain__when" data-plan="blood">by 3 December 2026</p><h3>Rabies blood test, where required</h3><p>Taken after the rabies vaccine, at an approved laboratory. Some countries set a minimum gap. Results can expire: Singapore only accepts a sample taken within 12 months of export.</p></li>
       <li><p class="chain__when"><span class="tl__num">180</span> days</p><h3>The long wait</h3><p>Some countries count from the blood test before your pet may enter: at least 90 days for Singapore, 180 days for Japan.</p></li>
       <li><p class="chain__when" data-plan="inspect">from 22 May 2027</p><h3>Final health certificate</h3><p>Issued in the last days before travel: within 10 days for the UK, 2 to 7 days before export for Singapore.</p></li>
     </ol>
@@ -688,8 +689,8 @@ html:not(.js) .globe__fig{display:none}
   <div class="scene-stage">
     <div class="wrap globe__wrap">
       <div class="globe__head">
-        <h2 id="timing-title">Weeks, months, or not directly.</h2>
-        <p class="lead">It depends on where you're going, your animal, and what has already been done. Four examples from Malaysia:</p>
+        <h2 id="timing-title">How long will it take?</h2>
+        <p class="lead"><strong>Weeks, months, or not directly.</strong> It depends on where you're going, your animal, and what has already been done. Four examples from Malaysia:</p>
       </div>
       <figure class="globe__fig" aria-hidden="true">
         <canvas class="globe__canvas"></canvas>
@@ -711,7 +712,7 @@ html:not(.js) .globe__fig{display:none}
           <div>
             <p class="route__time">21 days after the rabies vaccine</p>
             <div class="bar" style="--d:21" aria-hidden="true"><span class="bar__fill"></span></div>
-            <p class="route__needs">Microchip, rabies vaccine, a 21 day wait, a Nipah virus test within 10 days before the flight, and a health certificate issued within 10 days of arrival. No rabies blood test. Dogs also need tapeworm treatment 1 to 5 days before arrival. Flights must use an approved route, and pets usually fly as cargo.</p>
+            <p class="route__needs">Microchip, then rabies vaccine, then a 21 day wait. A Nipah virus test within 10 days before the flight. A health certificate issued within 10 days of arrival. No rabies blood test. Dogs also need tapeworm treatment 1 to 5 days before arrival. Flights must use an approved route, and pets usually fly as cargo.</p>
           </div>
         </div>
         <div class="route">
@@ -751,7 +752,7 @@ html:not(.js) .globe__fig{display:none}
 <section class="section" id="assessment">
   <div class="wrap assess">
     <div>
-      <h2>The free eligibility check</h2>
+      <h2>Get your free eligibility check</h2>
       <p class="lead">Tell us where you're going and when. We check your pet's timeline and tell you, plainly, whether your pet can go with&nbsp;you.</p>
       <p class="honest">If it can't be done in time, we'll say so, and tell you what your options are. That's what the check is for.</p>
       <h3 class="assess__sub">What you get back</h3>
@@ -764,7 +765,7 @@ html:not(.js) .globe__fig{display:none}
       <p class="assess__when">You get your answer on WhatsApp, usually within 1 hour, 9am to 6pm Malaysia time.</p>
     </div>
     <form class="ask" id="ask" novalidate>
-      <h3 class="ask__title">Start your free eligibility check</h3>
+      <h3 class="ask__title">Fill in what you know</h3>
       <fieldset class="ask__dir">
         <legend class="sr-only">Which way are you moving?</legend>
         <label><input type="radio" name="dir" value="out" checked><span>Leaving Malaysia</span></label>
@@ -824,7 +825,7 @@ html:not(.js) .globe__fig{display:none}
     <div class="team">
       <div>
         <h2>One team plans every step with you.</h2>
-        <p class="lead">Most people end up coordinating a vet, an airline, a permit office and a deadline on their own. With FUGR, one team plans all of it with you and gives you the dates.</p>
+        <p class="lead">On your own, you end up coordinating a vet, an airline, a permit office and a deadline. With FUGR, one team plans all of it with you and gives you the dates.</p>
       </div>
       <div>
         <ul class="handles">
@@ -852,7 +853,7 @@ html:not(.js) .globe__fig{display:none}
   <div class="wrap">
     <div class="founders">
       <div class="founders__side">
-        <h2 id="founders-title">How we work</h2>
+        <h2 id="founders-title">A dated plan before you commit.</h2>
         <p class="founders__sign">The founders of FUGR</p>
       </div>
       <blockquote class="founders__quote">
@@ -868,7 +869,7 @@ html:not(.js) .globe__fig{display:none}
   <div class="wrap split split--media">
     <div class="split__copy">
       <h2>Rabbit, bird or reptile? Find out early if it can travel.</h2>
-      <p>Many relocation services only handle cats and dogs. Small animals and exotics often need extra permits, and some breeds and species can't enter some countries at all, whatever the paperwork. Tell us the species and the destination, and we'll tell you early whether it can travel.</p>
+      <p>Small animals and exotics often need extra permits, and some breeds and species can't enter some countries at all, whatever the paperwork. Tell us the species and the destination, and we'll tell you early whether it can travel.</p>
       <a class="btn btn--navy" href="https://wa.me/60173899208?text=Hi%20FUGR%2C%20I%27d%20like%20a%20free%20eligibility%20check.%0AMoving%20to%3A%20%0AAnimal%20%28type%2C%20breed%2C%20age%29%3A%20%0APlanned%20departure%20date%3A%20" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Ask about my animal<span class="sr-only"> (opens WhatsApp)</span></a>
     </div>
     <figure class="photo photo--4x3"><picture><source type="image/webp" srcset="assets/small-animal-800.webp 800w, assets/small-animal.webp 1600w" sizes="(max-width: 960px) 100vw, 480px"><img src="assets/small-animal.jpg" width="1600" height="1195" loading="lazy" decoding="async" alt="A rabbit resting in a pet travel carrier on a clinic counter"></picture></figure>
@@ -899,7 +900,7 @@ html:not(.js) .globe__fig{display:none}
     <div class="faq">
       <details><summary>When should I start?</summary><p>As soon as you know where you're going. If your destination needs a rabies blood test, that can mean six months or more before you fly.</p></details>
       <details><summary>Can you guarantee my pet will be cleared?</summary><p>No one honestly can. The final decision belongs to the destination's authorities. What we do is make sure every step we're responsible for happens in the right order, on the dates in your plan.</p></details>
-      <details><summary>Will my pet be okay?</summary><p>We plan the move around the animal: vet visits spread across the timeline instead of crammed into the last week, a travel crate that meets the airline's live animal rules, and advice on getting your pet used to it well before travel day.</p></details>
+      <details><summary>Will my pet be okay?</summary><p>It's the right question to ask first. We plan the move around the animal. Vet visits are spread across the timeline, so nothing is rushed in the last week. The travel crate meets the airline's live animal rules. And you get advice on getting your pet used to it well before travel day.</p></details>
       <details><summary>Do you book flights?</summary><p>You book the flight yourself. We advise you on how to book it, and check the airline and route rules that apply to your pet, so the flight you book works.</p></details>
       <details><summary>How much does it cost?</summary><p>You get a quote after the free check, before you commit to anything. It covers only the services your move needs. Once you accept it, the price is fixed and the work starts. You pay 30 to 50 percent first, or on a timeline that suits you, and the full amount before the final health check.</p></details>
       <details><summary>Is the check really free?</summary><p>Yes. Whether you use FUGR afterwards is up to you.</p></details>
@@ -913,14 +914,14 @@ html:not(.js) .globe__fig{display:none}
   <div class="wrap closing__grid">
     <div>
     <h2>Find out if your pet can fly with you.</h2>
-    <p class="closing__lead">Send your destination and departure date on WhatsApp. The free eligibility check tells you whether it can be done in time. Know your pet's dates before you book your own flight.</p>
+    <p class="closing__lead">Send your destination and departure date on WhatsApp. The free eligibility check tells you whether it can be done in time. You'll know what comes first, the date for every step, and when your pet can fly. Before you book anything.</p>
     <div class="closing__actions">
       <a class="textlink closing__alt" href="https://wa.me/60173899208?text=Hi%20FUGR%2C%20I%27d%20like%20to%20bring%20a%20pet%20into%20Malaysia.%0AMoving%20from%3A%20%0AAnimal%20%28type%2C%20breed%2C%20age%29%3A%20%0APlanned%20arrival%20date%3A%20" target="_blank" rel="noopener">Plan my pet's move to Malaysia<span class="sr-only"> (opens WhatsApp)</span></a>
     </div>
     <p class="closing__hours">We reply 9am to 6pm Malaysia time, Monday to Friday. Outside those hours, as soon as we can.</p>
     </div>
     <form class="ask" id="ask2" novalidate>
-      <h3 class="ask__title">Start your free eligibility check</h3>
+      <h3 class="ask__title">Fill in what you know</h3>
       <fieldset class="ask__dir">
         <legend class="sr-only">Which way are you moving?</legend>
         <label><input type="radio" name="dir" value="out" checked><span>Leaving Malaysia</span></label>
