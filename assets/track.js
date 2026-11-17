@@ -53,7 +53,7 @@ var FUGR_GA4_ID = "";
     if (!a || e.defaultPrevented) return;   // the form stops a press when the country is still empty
     var href = a.getAttribute("href") || "";
     if (href.indexOf("wa.me/") !== -1) {
-      var intent = /bring%20a%20pet%20into%20Malaysia/i.test(href) ? "entering_malaysia" : /eligibility%20assessment/i.test(href) ? "leaving_malaysia" : "general";
+      var intent = /bring%20a%20pet%20into%20Malaysia/i.test(href) ? "entering_malaysia" : /eligibility%20check/i.test(href) ? "leaving_malaysia" : "general";
       send("whatsapp_click", { cta_location: where(a), cta_intent: intent, cta_text: words(a) });
     } else if (href.indexOf("mailto:") === 0) {
       send("email_click", { cta_location: where(a) });
