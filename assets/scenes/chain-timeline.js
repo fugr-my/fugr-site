@@ -5,8 +5,9 @@
 // the example plan for Japan builds one step at a time: each numbered step arrives with its date, the line
 // joining the steps fills as they do, and the long wait counts up to its 180 days. The closing note ends it.
 // On wide screens the five steps stand in a row and stay; on tablets one step shows at a time, under a row
-// of five numbered dots that fill as the plan goes on. Phones (767px and under) do not run the pinned scene:
-// the section scrolls normally, the picture is scrubbed as it passes, and a line draws down the steps (flow()).
+// of five numbered dots that fill as the plan goes on. That pinned scene now runs only when the page asks
+// for it (data-options '{"pin":true}'). By default the section scrolls normally on every screen: the
+// picture is scrubbed as it passes and a line draws along the steps (flow(), further down).
 //
 // Markup (index.html, #sequence): section.scene.tl > .scene-stage > .tl__wrap with
 //   .tl__top (.tl__head, .tl__media > .tl__chip[data-count][data-scan][data-desktop][data-phone] > img + canvas,
@@ -188,16 +189,18 @@
     };
     if (document.readyState === 'complete') watch(); else window.addEventListener('load', watch);
 
-    // Phones, with motion allowed (the scene itself does not run there): the section scrolls like any other.
+    // With motion allowed, the section scrolls like any other (on every screen size, unless the page asks for
+    // the pinned scene with data-options '{"pin":true}', which then runs above 767px):
     //   - the picture alone is scrubbed by the scroll as it crosses the screen; none of the wording moves with it
-    //   - a line draws down the left of the steps as the page is scrolled, and each step arrives when the
-    //     line reaches its number (and leaves again on the way back up)
+    //   - a line draws along the steps as the page is scrolled (down their left side up to 1120px wide, across
+    //     their top above that), and each step arrives when the line reaches its number, and leaves again on
+    //     the way back up
     //   - the heading, the intro, the two lines under the picture, the example line and the closing note
     //     arrive the way the rest of the page does, each time they come on screen, from either direction
     // Everything is class-driven (.is-flow on the section), so leaving this mode leaves nothing behind.
     const flow = () => {
       if (!window.gsap || !window.ScrollTrigger || !chain || !steps.length) return;
-      gsap.matchMedia().add('(max-width: 767px) and (prefers-reduced-motion: no-preference)', () => {
+      gsap.matchMedia().add((opts.pin ? '(max-width: 767px) and ' : '') + '(prefers-reduced-motion: no-preference)', () => {
         root.classList.add('is-flow');
         const watchers = [];
 
@@ -215,16 +218,28 @@
 
         // the line and the steps
         const C = 22;   // centre of a step's number, from the top of the step
+        const down = () => window.matchMedia('(max-width: 1120px)').matches;   // the steps stand in a column
         const length = () => Math.max(1, steps[steps.length - 1].offsetTop - steps[0].offsetTop);
         const line = { p: 0 };
         const draw = () => {
-          const len = length(), tip = line.p * len;
-          chain.style.setProperty('--line-len', len + 'px');
-          chain.style.setProperty('--flow', line.p.toFixed(4));
-          steps.forEach((li) => li.classList.toggle('is-on', line.p > 0.001 && tip >= li.offsetTop - steps[0].offsetTop - 1));
+          const on = line.p > 0.001;
+          if (down()) {
+            const len = length(), tip = line.p * len;
+            chain.style.setProperty('--line-len', len + 'px');
+            chain.style.setProperty('--flow', line.p.toFixed(4));
+            chain.style.removeProperty('--fill');
+            steps.forEach((li) => li.classList.toggle('is-on', on && tip >= li.offsetTop - steps[0].offsetTop - 1));
+          } else {
+            // in a row: the line runs from the first number to the last, so step i is reached at i / (n - 1)
+            chain.style.setProperty('--fill', line.p.toFixed(4));
+            steps.forEach((li, i) => li.classList.toggle('is-on', on && line.p >= i / (steps.length - 1) - 0.001));
+          }
         };
+        // in a column the tip of the line stays a little below the middle of the screen; in a row the line
+        // fills while the row rises from the lower part of the screen to the upper
         gsap.to(line, { p: 1, ease: 'none', onUpdate: draw,
-          scrollTrigger: { trigger: chain, start: () => 'top+=' + C + ' 58%', end: () => 'top+=' + (C + length()) + ' 58%', scrub: 0.4, invalidateOnRefresh: true, onRefresh: draw } });
+          scrollTrigger: { trigger: chain, start: () => (down() ? 'top+=' + C + ' 58%' : 'top 80%'), end: () => (down() ? 'top+=' + (C + length()) + ' 58%' : 'top 30%'),
+            scrub: 0.4, invalidateOnRefresh: true, onRefresh: draw } });
         draw();
 
         // the wording arrives like the rest of the page
@@ -252,7 +267,7 @@
         return () => {
           watchers.forEach((w) => w.disconnect());
           items.forEach((el) => { el.classList.remove('flow', 'is-in', 'is-above'); el.style.removeProperty('transition-delay'); });
-          chain.style.removeProperty('--line-len'); chain.style.removeProperty('--flow');
+          chain.style.removeProperty('--line-len'); chain.style.removeProperty('--flow'); chain.style.removeProperty('--fill');
           root.classList.remove('is-flow');
         };
       });
@@ -261,13 +276,14 @@
     const scene = Stage.scene(root, {
       hold: opts.hold ?? HOLD,
       scrub: opts.scrub ?? 0.5,
-      phone: 'rest',   // phones do not run the pinned scene; with motion allowed they get flow() below
-      build(tl, { phone }) {
+      phone: 'rest',   // phones never run the pinned scene
+      // the pinned scene runs only when the page asks for it; otherwise every screen gets flow() below
+      build: opts.pin ? (tl, { phone }) => {
         phoneNow = phone;
         const s = { p: 0 };
         tl.to(s, { p: 1, duration: 1, ease: 'none', onUpdate: () => render(s.p) }, 0);
         render(0);
-      },
+      } : null,
       rest: finished,
     }) || (finished(), null);
     flow();   // after the scene, so it starts from the finished composition
