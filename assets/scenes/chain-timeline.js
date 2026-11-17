@@ -4,8 +4,9 @@
 // then, once the vet's hand is in, "Every step after it begins with a scan."). The clip then steps back and
 // the example plan for Japan builds one step at a time: each numbered step arrives with its date, the line
 // joining the steps fills as they do, and the long wait counts up to its 180 days. The closing note ends it.
-// On wide screens the five steps stand in a row and stay; on tablets and phones one step shows at a time,
-// under a row of five numbered dots that fill as the plan goes on.
+// On wide screens the five steps stand in a row and stay; on tablets one step shows at a time, under a row
+// of five numbered dots that fill as the plan goes on. Phones (767px and under) do not run the scene: they
+// get the finished composition, read at the visitor's own pace.
 //
 // Markup (index.html, #sequence): section.scene.tl > .scene-stage > .tl__wrap with
 //   .tl__top (.tl__head, .tl__media > .tl__chip[data-count][data-scan][data-desktop][data-phone] > img + canvas,
@@ -190,7 +191,7 @@
     return Stage.scene(root, {
       hold: opts.hold ?? HOLD,
       scrub: opts.scrub ?? 0.5,
-      phone: 'same',
+      phone: 'rest',   // phones get the finished composition: the scan still and the five steps as a plain list
       build(tl, { phone }) {
         phoneNow = phone;
         const s = { p: 0 };
