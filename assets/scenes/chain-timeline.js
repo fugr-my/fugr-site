@@ -287,6 +287,9 @@
       } : null,
       rest: finished,
     }) || (finished(), null);
+    // With reduced motion on a wide screen the stage runs neither branch, so the finished composition (the
+    // scan still in place of the clip's first frame) is set here.
+    if (!root.classList.contains('is-live') && !root.classList.contains('is-rest')) finished();
     flow();   // after the scene, so it starts from the finished composition
     return scene;
   };
