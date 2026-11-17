@@ -5,8 +5,8 @@
 // the example plan for Japan builds one step at a time: each numbered step arrives with its date, the line
 // joining the steps fills as they do, and the long wait counts up to its 180 days. The closing note ends it.
 // On wide screens the five steps stand in a row and stay; on tablets one step shows at a time, under a row
-// of five numbered dots that fill as the plan goes on. Phones (767px and under) do not run the scene: they
-// get the finished composition, read at the visitor's own pace.
+// of five numbered dots that fill as the plan goes on. Phones (767px and under) do not run the pinned scene:
+// the section scrolls normally, the picture is scrubbed as it passes, and a line draws down the steps (flow()).
 //
 // Markup (index.html, #sequence): section.scene.tl > .scene-stage > .tl__wrap with
 //   .tl__top (.tl__head, .tl__media > .tl__chip[data-count][data-scan][data-desktop][data-phone] > img + canvas,
@@ -188,10 +188,80 @@
     };
     if (document.readyState === 'complete') watch(); else window.addEventListener('load', watch);
 
-    return Stage.scene(root, {
+    // Phones, with motion allowed (the scene itself does not run there): the section scrolls like any other.
+    //   - the picture alone is scrubbed by the scroll as it crosses the screen; none of the wording moves with it
+    //   - a line draws down the left of the steps as the page is scrolled, and each step arrives when the
+    //     line reaches its number (and leaves again on the way back up)
+    //   - the heading, the intro, the two lines under the picture, the example line and the closing note
+    //     arrive the way the rest of the page does, each time they come on screen, from either direction
+    // Everything is class-driven (.is-flow on the section), so leaving this mode leaves nothing behind.
+    const flow = () => {
+      if (!window.gsap || !window.ScrollTrigger || !chain || !steps.length) return;
+      gsap.matchMedia().add('(max-width: 767px) and (prefers-reduced-motion: no-preference)', () => {
+        root.classList.add('is-flow');
+        const watchers = [];
+
+        // the picture
+        if (chip && chipBox) {
+          if ('IntersectionObserver' in window) {
+            const near = new IntersectionObserver((e) => { if (e[0].isIntersecting) { chip.start(true); near.disconnect(); } }, { rootMargin: '200% 0px' });
+            near.observe(root); watchers.push(near);
+          } else chip.start(true);
+          const clip = { p: 0 };
+          chip.show(0);
+          gsap.to(clip, { p: 1, ease: 'none', onUpdate: () => chip.show(clip.p * (chip.n - 1)),
+            scrollTrigger: { trigger: chipBox, start: 'top 80%', end: 'center 32%', scrub: 0.5 } });
+        }
+
+        // the line and the steps
+        const C = 22;   // centre of a step's number, from the top of the step
+        const length = () => Math.max(1, steps[steps.length - 1].offsetTop - steps[0].offsetTop);
+        const line = { p: 0 };
+        const draw = () => {
+          const len = length(), tip = line.p * len;
+          chain.style.setProperty('--line-len', len + 'px');
+          chain.style.setProperty('--flow', line.p.toFixed(4));
+          steps.forEach((li) => li.classList.toggle('is-on', line.p > 0.001 && tip >= li.offsetTop - steps[0].offsetTop - 1));
+        };
+        gsap.to(line, { p: 1, ease: 'none', onUpdate: draw,
+          scrollTrigger: { trigger: chain, start: () => 'top+=' + C + ' 58%', end: () => 'top+=' + (C + length()) + ' 58%', scrub: 0.4, invalidateOnRefresh: true, onRefresh: draw } });
+        draw();
+
+        // the wording arrives like the rest of the page
+        const items = [root.querySelector('.tl__head h2'), root.querySelector('.tl__head .lead'), chipBox, say1, say2, root.querySelector('.tl__example'), close].filter(Boolean);
+        items.forEach((el) => el.classList.add('flow'));
+        if ('IntersectionObserver' in window) {
+          const enter = new IntersectionObserver((entries) => {
+            entries.filter((e) => e.isIntersecting && !e.target.classList.contains('is-in')).forEach((e, i) => {
+              e.target.style.transitionDelay = (Math.min(i, 6) * 0.12) + 's';
+              e.target.classList.add('is-in');
+            });
+          }, { rootMargin: '0px 0px -20% 0px' });
+          const leave = new IntersectionObserver((entries) => {
+            entries.forEach((e) => {
+              if (e.isIntersecting) return;
+              e.target.style.transitionDelay = '0s';
+              e.target.classList.remove('is-in');
+              e.target.classList.toggle('is-above', e.boundingClientRect.top < 0);   // next time it comes down into place
+            });
+          });
+          items.forEach((el) => { enter.observe(el); leave.observe(el); });
+          watchers.push(enter, leave);
+        } else items.forEach((el) => el.classList.add('is-in'));
+
+        return () => {
+          watchers.forEach((w) => w.disconnect());
+          items.forEach((el) => { el.classList.remove('flow', 'is-in', 'is-above'); el.style.removeProperty('transition-delay'); });
+          chain.style.removeProperty('--line-len'); chain.style.removeProperty('--flow');
+          root.classList.remove('is-flow');
+        };
+      });
+    };
+
+    const scene = Stage.scene(root, {
       hold: opts.hold ?? HOLD,
       scrub: opts.scrub ?? 0.5,
-      phone: 'rest',   // phones get the finished composition: the scan still and the five steps as a plain list
+      phone: 'rest',   // phones do not run the pinned scene; with motion allowed they get flow() below
       build(tl, { phone }) {
         phoneNow = phone;
         const s = { p: 0 };
@@ -200,5 +270,7 @@
       },
       rest: finished,
     }) || (finished(), null);
+    flow();   // after the scene, so it starts from the finished composition
+    return scene;
   };
 })();
